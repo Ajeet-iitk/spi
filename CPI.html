@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CPI Calculator - SpaceX Style</title>
+  <link rel="stylesheet" type="text/css" href="cpi_style.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">SPI Calculator</h1>
+    <h4 class= "title">Develop by Ajeet Kushwaha</h4>
+    
+    <table id="courseTable">
+      <tr>
+        <th>Course</th>
+        <th>Credit</th>
+        <th>Grade</th>
+      </tr>
+    </table>
+    
+    <button class="addButton" onclick="addCourse()">Add Course</button>
+    
+    <button class="calculateButton" onclick="calculateCPI()">Calculate SPI</button>
+    
+    <div id="cpiResult"></div>
+  </div>
+
+  <script>
+    function addCourse() {
+      var table = document.getElementById("courseTable");
+      var courseCount = table.rows.length;
+      
+      var row = table.insertRow(courseCount);
+      
+      var courseCell = row.insertCell(0);
+      courseCell.innerHTML = "Course " + courseCount;
+      
+      var creditCell = row.insertCell(1);
+      var creditInput = document.createElement("input");
+      creditInput.type = "number";
+      creditInput.name = "credit" + courseCount;
+      creditCell.appendChild(creditInput);
+      
+      var gradeCell = row.insertCell(2);
+      var gradeInput = document.createElement("input");
+      gradeInput.type = "text";
+      gradeInput.name = "grade" + courseCount;
+      gradeCell.appendChild(gradeInput);
+    }
+    
+    function calculateCPI() {
+      var table = document.getElementById("courseTable");
+      var totalCredit = 0;
+      var totalGradeCredit = 0;
+      
+      for (var i = 1; i < table.rows.length; i++) {
+        var creditInput = document.getElementsByName("credit" + i)[0];
+        var gradeInput = document.getElementsByName("grade" + i)[0];
+        
+        var credit = parseFloat(creditInput.value);
+        var grade = parseFloat(gradeInput.value);
+        
+        if (!isNaN(credit) && !isNaN(grade)) {
+          totalCredit += credit;
+          totalGradeCredit += credit * grade;
+        }
+      }
+      
+      var cpi = totalGradeCredit / totalCredit;
+      
+      var cpiResult = document.getElementById("cpiResult");
+      cpiResult.innerHTML = "Your CPI: " + cpi.toFixed(2);
+    }
+  </script>
+</body>
+</html>
